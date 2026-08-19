@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -42,6 +42,13 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{% url 'dashboard:portfolio' %}" class="sidebar-link text-warning fw-semibold">
+                        <i class="fa-solid fa-code text-warning"></i>
+                        <span>Developer Portfolio</span>
+                    </a>
+                </li>
+
 
                 {% if user.role == 'ADMIN' or user.role == 'HR' or user.is_superuser %}
                 <li class="menu-header">Staff & Organization</li>

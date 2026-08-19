@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --border-dark: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+        }
+        .hero-section {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            padding: 4rem 1rem 3rem;
+            border-bottom: 1px solid var(--border-dark);
+            text-align: center;
+        }
+        .avatar-hero {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+            margin-bottom: 1.5rem;
+        }
+        .project-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-dark);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(59, 130, 246, 0.2);
+        }
+        .project-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 0.85rem;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.25rem;
+        }
+        .tech-pill {
+            background: rgba(255, 255, 255, 0.06);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.65rem;
+            border-radius: 2rem;
+            display: inline-block;
+        }
+        .btn-github {
+            background: #24292f;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            border-radius: 2rem;
+            padding: 0.5rem 1.25rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-github:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .btn-live {
+            background: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 2rem;
+            padding: 0.5rem 1.25rem;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-live:hover {
+            background: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+        }
+        .skill-badge {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3">
+        <div class="container-fluid max-w-6xl">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% url 'dashboard:portfolio' %}">
+                <i class="fa-solid fa-code text-primary fs-4"></i>
+                <span>{{ developer_name }}</span>
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <a href="https://github.com/ashishmohod123" target="_blank" class="btn btn-sm btn-github">
+                    <i class="fa-brands fa-github"></i> GitHub Profile
+                </a>
+                <a href="{% url 'dashboard:index' %}" class="btn btn-sm btn-primary rounded-pill px-3">
+                    <i class="fa-solid fa-layer-group me-1"></i> Launch WorkSphere
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero-section">
+        <div class="container max-w-4xl">
+            <div class="avatar-hero">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <h1 class="fw-bold text-white mb-2">{{ developer_name }}</h1>
+            <p class="text-primary fw-semibold fs-5 mb-3">Senior Python & Django Full Stack Developer</p>
+            <p class="text-secondary mx-auto mb-4" style="max-width: 680px;">
+                Specialized in designing scalable backend architectures, multi-tenant SaaS platforms, RESTful APIs, and database-driven enterprise systems with Python, Django, PostgreSQL, and modern responsive frontends.
+            </p>
+            
+            <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+                <span class="skill-badge"><i class="fa-brands fa-python text-warning"></i> Python 3</span>
+                <span class="skill-badge"><i class="fa-solid fa-gem text-success"></i> Django 5 / ORM</span>
+                <span class="skill-badge"><i class="fa-solid fa-database text-info"></i> PostgreSQL / SQLite</span>
+                <span class="skill-badge"><i class="fa-brands fa-bootstrap text-primary"></i> Bootstrap 5</span>
+                <span class="skill-badge"><i class="fa-brands fa-js text-warning"></i> JavaScript (ES6+)</span>
+                <span class="skill-badge"><i class="fa-solid fa-cloud text-info"></i> Vercel / Docker</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Project Showcase Section -->
+    <main class="container max-w-6xl py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold text-white mb-1"><i class="fa-solid fa-folder-open text-primary me-2"></i>Featured Engineering Projects</h3>
+                <p class="text-secondary small mb-0">Click any project to inspect its live deployment or view source code directly on GitHub.</p>
+            </div>
+            <span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill">
+                {{ projects|length }} Major Projects
+            </span>
+        </div>
+
+        <div class="row g-4">
+            {% for p in projects %}
+            <div class="col-lg-6">
+                <div class="project-card">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="project-icon">
+                            <i class="{{ p.icon }}"></i>
+                        </div>
+                        <div class="d-flex gap-1">
+                            <span class="badge bg-dark border border-secondary text-secondary small py-1 px-2">{{ p.category }}</span>
+                            <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-25 py-1 px-2">{{ p.status }}</span>
+                        </div>
+                    </div>
+
+                    <h4 class="fw-bold text-white mb-1">{{ p.title }}</h4>
+                    <p class="text-info small fw-semibold mb-3">{{ p.subtitle }}</p>
+                    
+                    <p class="text-secondary small mb-3 flex-grow-1" style="line-height: 1.6;">
+                        {{ p.description }}
+                    </p>
+
+                    <!-- Key Highlights -->
+                    <div class="bg-dark bg-opacity-50 p-3 rounded-3 mb-3 border border-secondary border-opacity-25 small">
+                        <div class="text-light fw-semibold mb-2"><i class="fa-solid fa-check-double text-primary me-1"></i> Key Technical Capabilities:</div>
+                        <ul class="list-unstyled text-secondary small mb-0 ps-1">
+                            {% for h in p.highlights %}
+                            <li class="mb-1 d-flex align-items-start gap-2">
+                                <i class="fa-solid fa-circle-dot text-info mt-1" style="font-size: 0.55rem;"></i>
+                                <span>{{ h }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Tech Stack Pills -->
+                    <div class="d-flex flex-wrap gap-1 mb-4">
+                        {% for tech in p.technologies %}
+                        <span class="tech-pill">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Action Buttons with Direct GitHub Link -->
+                    <div class="d-flex gap-2 pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                        <a href="{{ p.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-github flex-grow-1 justify-content-center">
+                            <i class="fa-brands fa-github"></i> View on GitHub
+                        </a>
+                        <a href="{{ p.live_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-live flex-grow-1 justify-content-center">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-top border-secondary border-opacity-25 py-4 text-center text-secondary small">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 <strong>{{ developer_name }}</strong> &bull; Senior Python & Django Full Stack Developer</p>
+            <div class="d-flex justify-content-center gap-3 mt-2">
+                <a href="https://github.com/ashishmohod123" target="_blank" class="text-secondary text-decoration-none"><i class="fa-brands fa-github me-1"></i>GitHub Profile</a>
+                <a href="https://worksphere-hrms-lac.vercel.app" target="_blank" class="text-secondary text-decoration-none"><i class="fa-solid fa-globe me-1"></i>Live WorkSphere</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
