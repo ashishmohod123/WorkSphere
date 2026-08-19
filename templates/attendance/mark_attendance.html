@@ -1,0 +1,42 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Mark Attendance{% endblock %}
+{% block page_title %}Manual Attendance Entry / Adjustment{% endblock %}
+
+{% block content %}
+<div class="card card-custom p-4 max-w-lg mx-auto">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label fw-semibold small">Employee</label>
+            {{ form.employee }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small">Date</label>
+            {{ form.date }}
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-6">
+                <label class="form-label fw-semibold small">Check In Time</label>
+                {{ form.check_in }}
+            </div>
+            <div class="col-6">
+                <label class="form-label fw-semibold small">Check Out Time</label>
+                {{ form.check_out }}
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small">Status</label>
+            {{ form.status }}
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-semibold small">Remarks / Notes</label>
+            {{ form.notes }}
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <a href="{% url 'attendance:list' %}" class="btn btn-light border rounded-pill px-4">Cancel</a>
+            <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Save Attendance</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

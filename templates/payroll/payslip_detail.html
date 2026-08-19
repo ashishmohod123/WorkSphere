@@ -1,0 +1,157 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Payslip - {{ payslip.employee.full_name }}{% endblock %}
+{% block page_title %}Payslip Invoice & Statement (INR){% endblock %}
+
+{% block extra_css %}
+<style>
+@media print {
+    #sidebar, .top-navbar, footer, .no-print {
+        display: none !important;
+    }
+    #main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 no-print">
+    <a href="{% url 'payroll:list' %}" class="btn btn-light border rounded-pill px-4">
+        <i class="fa-solid fa-arrow-left me-1"></i> Back to Payroll
+    </a>
+    <button onclick="window.print()" class="btn btn-primary rounded-pill px-4 fw-bold">
+        <i class="fa-solid fa-print me-1"></i> Print / Save PDF
+    </button>
+</div>
+
+<div class="card card-custom p-5 max-w-4xl mx-auto bg-white" id="payslip-invoice">
+    <!-- Invoice Header -->
+    <div class="d-flex justify-content-between align-items-start border-bottom pb-4 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <i class="fa-solid fa-layer-group text-primary fs-3"></i>
+                <h4 class="fw-bold text-dark mb-0">WorkSphere Technologies India Pvt. Ltd.</h4>
+            </div>
+            <p class="text-muted small mb-0">
+                Cyber City, Tower B, 4th Floor, Tech Zone, Bengaluru, Karnataka - 560103<br>
+                <strong>CIN:</strong> U72200KA2024PTC189000 &bull; <strong>GSTIN:</strong> 29AAACW1234F1Z5
+            </p>
+        </div>
+        <div class="text-end">
+            <h5 class="fw-bold text-primary mb-1">SALARY PAYSLIP</h5>
+            <div class="text-muted small">Month & Year: <strong>{{ payslip.get_month_name }} {{ payslip.year }}</strong></div>
+            <div class="text-muted small">Issued Date: {{ payslip.generated_at|date:"d M Y" }}</div>
+            <span class="badge {{ payslip.get_status_badge }} mt-2">{{ payslip.get_payment_status_display }}</span>
+        </div>
+    </div>
+
+    <!-- Employee & Company Details -->
+    <div class="row g-3 mb-4 p-3 bg-light rounded-3">
+        <div class="col-sm-6">
+            <span class="text-muted small d-block">Employee Information:</span>
+            <div class="fw-bold text-dark fs-5">{{ payslip.employee.full_name }}</div>
+            <div class="small text-muted">Employee ID: <strong>{{ payslip.employee.employee_id }}</strong></div>
+            <div class="small text-muted">Department: {{ payslip.employee.department.name }}</div>
+            <div class="small text-muted">Designation: {{ payslip.employee.designation.title }}</div>
+            <div class="small text-muted">Location: {{ payslip.employee.city }}</div>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <span class="text-muted small d-block">Disbursement Details (India):</span>
+            <div class="small text-muted">Payment Method: <strong>{{ payslip.get_payment_method_display }}</strong></div>
+            <div class="small text-muted">Disbursal Date: {{ payslip.payment_date|date:"d M Y"|default:'In Processing' }}</div>
+            <div class="small text-muted">Bank Ref / UTR: <strong>{{ payslip.transaction_reference|default:'Pending Release' }}</strong></div>
+            <div class="small text-muted">PAN: <strong>ABCDE1234F</strong> &bull; UAN: <strong>101234567890</strong></div>
+        </div>
+    </div>
+
+    <!-- Salary Breakdown Tables -->
+    <div class="row g-4 mb-4">
+        <!-- Earnings -->
+        <div class="col-sm-6">
+            <h6 class="fw-bold text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-plus-circle me-1"></i> Earnings (INR ₹)</h6>
+            <table class="table table-sm table-borderless">
+                <tbody>
+                    <tr>
+                        <td class="text-muted">Basic Salary</td>
+                        <td class="text-end fw-semibold">₹{{ payslip.basic_salary }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">House Rent Allowance (HRA)</td>
+                        <td class="text-end fw-semibold">₹{{ payslip.hra }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Medical & Conveyance</td>
+                        <td class="text-end fw-semibold">₹{{ payslip.medical_allowance }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Special Allowance</td>
+                        <td class="text-end fw-semibold">₹{{ payslip.special_allowance }}</td>
+                    </tr>
+                    <tr class="border-top">
+                        <td class="fw-bold text-dark pt-2">Gross Monthly Earnings</td>
+                        <td class="text-end fw-bold text-success pt-2">₹{{ payslip.gross_salary }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Deductions -->
+        <div class="col-sm-6">
+            <h6 class="fw-bold text-danger border-bottom pb-2 mb-3"><i class="fa-solid fa-minus-circle me-1"></i> Deductions (INR ₹)</h6>
+            <table class="table table-sm table-borderless">
+                <tbody>
+                    <tr>
+                        <td class="text-muted">Income Tax / TDS</td>
+                        <td class="text-end fw-semibold">-₹{{ payslip.tax_deduction }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Employee Provident Fund (EPF)</td>
+                        <td class="text-end fw-semibold">-₹{{ payslip.provident_fund }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Professional Tax (PT) & Others</td>
+                        <td class="text-end fw-semibold">-₹{{ payslip.other_deductions }}</td>
+                    </tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr class="border-top">
+                        <td class="fw-bold text-dark pt-2">Total Deductions</td>
+                        <td class="text-end fw-bold text-danger pt-2">-₹{{ payslip.total_deductions }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Net Salary Card -->
+    <div class="p-3 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-3 d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="text-muted small fw-semibold text-uppercase">Net In-Hand Salary</span>
+            <h3 class="fw-bold text-primary mb-0">₹{{ payslip.net_salary }}</h3>
+        </div>
+        <div class="text-end small text-muted">
+            Net Payout = Gross Earnings - Total Deductions (INR)
+        </div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="row pt-5 mt-4 text-center">
+        <div class="col-6">
+            <div class="border-top pt-2 mx-auto" style="max-width: 200px;">
+                <span class="small text-muted">Employee Signature</span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="border-top pt-2 mx-auto" style="max-width: 200px;">
+                <span class="small text-muted">Authorized HR Signatory</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

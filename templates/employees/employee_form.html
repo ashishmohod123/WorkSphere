@@ -1,0 +1,112 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card card-custom p-4 max-w-4xl mx-auto">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.username %}
+        <!-- Account Credentials Section -->
+        <h6 class="fw-bold text-primary mb-3 pb-2 border-bottom"><i class="fa-solid fa-lock me-2"></i>Account & Access Credentials</h6>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Account Role</label>
+                {{ form.role }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Password</label>
+                {{ form.password }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Email Address</label>
+                {{ form.email }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Personal Info Section -->
+        <h6 class="fw-bold text-primary mb-3 pb-2 border-bottom"><i class="fa-regular fa-user me-2"></i>Personal Details</h6>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">First Name</label>
+                {{ form.first_name }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Last Name</label>
+                {{ form.last_name }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Date of Birth</label>
+                {{ form.date_of_birth }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Gender</label>
+                {{ form.gender }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Blood Group</label>
+                {{ form.blood_group }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Contact Phone</label>
+                {{ form.phone }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Emergency Contact</label>
+                {{ form.emergency_contact }}
+            </div>
+            <div class="col-md-8">
+                <label class="form-label fw-semibold small">Residential Address</label>
+                {{ form.address }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">City</label>
+                {{ form.city }}
+            </div>
+        </div>
+
+        <!-- Organization & Compensation Section -->
+        <h6 class="fw-bold text-primary mb-3 pb-2 border-bottom"><i class="fa-solid fa-briefcase me-2"></i>Company & Compensation</h6>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Department</label>
+                {{ form.department }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Designation</label>
+                {{ form.designation }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold small">Joining Date</label>
+                {{ form.joining_date }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Monthly Basic Salary (₹ INR)</label>
+                {{ form.basic_salary }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold small">Employment Status</label>
+                {{ form.status }}
+            </div>
+            <div class="col-12">
+                <label class="form-label fw-semibold small">Profile Picture</label>
+                {{ form.avatar }}
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+            <a href="{% url 'employees:list' %}" class="btn btn-light border px-4 rounded-pill">Cancel</a>
+            <button type="submit" class="btn btn-primary px-4 rounded-pill fw-bold">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Save Employee
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

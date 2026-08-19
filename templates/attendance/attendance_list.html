@@ -1,0 +1,123 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Daily Attendance{% endblock %}
+{% block page_title %}Daily Attendance Tracking{% endblock %}
+
+{% block content %}
+<!-- Daily Stats Summary -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-stat p-3">
+            <span class="text-muted small fw-semibold text-uppercase">Total Active Staff</span>
+            <h3 class="fw-bold text-dark mb-0 mt-1">{{ total_active }}</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-stat p-3">
+            <span class="text-muted small fw-semibold text-uppercase">Present Today</span>
+            <h3 class="fw-bold text-success mb-0 mt-1">{{ present_count }}</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-stat p-3">
+            <span class="text-muted small fw-semibold text-uppercase">Absent</span>
+            <h3 class="fw-bold text-danger mb-0 mt-1">{{ absent_count }}</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-stat p-3">
+            <span class="text-muted small fw-semibold text-uppercase">On Leave</span>
+            <h3 class="fw-bold text-warning mb-0 mt-1">{{ leave_count }}</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Filters Bar -->
+<div class="card card-custom p-3 mb-4">
+    <form method="get" class="row g-2 align-items-center">
+        <div class="col-md-3">
+            <label class="form-label small text-muted mb-1">Select Date</label>
+            <input type="date" name="date" value="{{ target_date }}" class="form-control" onchange="this.form.submit()">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small text-muted mb-1">Filter by Status</label>
+            <select name="status" class="form-select" onchange="this.form.submit()">
+                <option value="">All Statuses</option>
+                {% for code, label in statuses %}
+                <option value="{{ code }}" {% if status_filter == code %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label small text-muted mb-1">Search Staff</label>
+            <div class="input-group">
+                <input type="text" name="q" value="{{ search_q }}" class="form-control" placeholder="Search employee...">
+                <button type="submit" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+        <div class="col-md-2 text-md-end pt-md-4">
+            {% if user.role == 'ADMIN' or user.role == 'HR' or user.is_superuser %}
+            <a href="{% url 'attendance:mark' %}" class="btn btn-primary w-100 rounded-pill">
+                <i class="fa-solid fa-plus me-1"></i> Mark Entry
+            </a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<!-- Attendance Table -->
+<div class="card card-custom">
+    <div class="card-header bg-white p-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold mb-0 text-dark">Logs for {{ target_date }} ({{ attendances.count }})</h6>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-custom table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Department</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Total Hours</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for att in attendances %}
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="{{ att.employee.get_avatar }}" alt="{{ att.employee.full_name }}" class="avatar-img">
+                            <div>
+                                <a href="{% url 'employees:detail' pk=att.employee.pk %}" class="fw-bold text-dark text-decoration-none">
+                                    {{ att.employee.full_name }}
+                                </a>
+                                <div class="text-muted small">{{ att.employee.employee_id }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="badge bg-light text-dark border">{{ att.employee.department.name|default:'General' }}</span></td>
+                    <td class="fw-semibold text-dark">{{ att.check_in|time:"H:i:s"|default:'--:--:--' }}</td>
+                    <td class="fw-semibold text-dark">{{ att.check_out|time:"H:i:s"|default:'--:--:--' }}</td>
+                    <td>
+                        <span class="fw-bold text-primary">{{ att.working_hours }} hrs</span>
+                    </td>
+                    <td>
+                        <span class="badge {{ att.get_status_badge }}">{{ att.get_status_display }}</span>
+                    </td>
+                    <td class="text-muted small">{{ att.notes|default:'-' }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center py-5 text-muted">
+                        <i class="fa-regular fa-calendar-xmark fs-1 d-block mb-2 text-secondary"></i>
+                        No attendance logs recorded for {{ target_date }}.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

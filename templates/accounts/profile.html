@@ -1,0 +1,116 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}My Profile{% endblock %}
+{% block page_title %}User Profile & Security{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card card-custom p-4 text-center">
+            <div class="position-relative d-inline-block mx-auto mb-3">
+                <img src="{{ user.get_avatar_url }}" alt="{{ user.username }}" class="avatar-lg">
+            </div>
+            <h5 class="fw-bold mb-1">{{ user.get_full_name|default:user.username }}</h5>
+            <p class="text-muted small mb-2">{{ user.email }}</p>
+            <span class="badge {{ user.get_role_badge }} py-1 px-3 mb-3">{{ user.get_role_display }}</span>
+
+            <div class="list-group list-group-flush text-start small border-top pt-3">
+                <div class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Username:</span>
+                    <span class="fw-semibold">{{ user.username }}</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Phone:</span>
+                    <span class="fw-semibold">{{ user.phone|default:'Not set' }}</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Member Since:</span>
+                    <span class="fw-semibold">{{ user.date_joined|date:"M d, Y" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card card-custom">
+            <div class="card-header bg-white border-bottom p-3">
+                <ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active fw-semibold" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-pane" type="button">
+                            <i class="fa-regular fa-pen-to-square me-1"></i> Edit Profile Info
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link fw-semibold" id="pwd-tab" data-bs-toggle="tab" data-bs-target="#pwd-pane" type="button">
+                            <i class="fa-solid fa-key me-1"></i> Change Password
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body p-4 tab-content">
+                <!-- Profile Edit Tab -->
+                <div class="tab-pane fade show active" id="edit-pane">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="profile">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">First Name</label>
+                                {{ profile_form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Last Name</label>
+                                {{ profile_form.last_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Email Address</label>
+                                {{ profile_form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Phone Number</label>
+                                {{ profile_form.phone }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Profile Picture</label>
+                                {{ profile_form.profile_picture }}
+                            </div>
+                        </div>
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-primary btn-custom">
+                                <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Password Change Tab -->
+                <div class="tab-pane fade" id="pwd-pane">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="password">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Old Password</label>
+                                {{ password_form.old_password }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">New Password</label>
+                                {{ password_form.new_password1 }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Confirm New Password</label>
+                                {{ password_form.new_password2 }}
+                            </div>
+                        </div>
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-danger btn-custom">
+                                <i class="fa-solid fa-shield-halved me-1"></i> Update Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Designations{% endblock %}
+{% block page_title %}Job Designations & Roles{% endblock %}
+
+{% block content %}
+<div class="card card-custom">
+    <div class="card-header bg-white p-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-id-badge me-2 text-primary"></i>All Designations ({{ designations.count }})</h6>
+        <a href="{% url 'employees:designation_create' %}" class="btn btn-sm btn-primary rounded-pill px-3">
+            <i class="fa-solid fa-plus me-1"></i> Add Designation
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-custom table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for desig in designations %}
+                <tr>
+                    <td class="fw-bold text-dark">{{ desig.title }}</td>
+                    <td><span class="badge bg-light text-dark border">{{ desig.department.name }}</span></td>
+                    <td class="text-muted small">{{ desig.description|truncatewords:8|default:'-' }}</td>
+                    <td>
+                        {% if desig.is_active %}
+                        <span class="badge bg-success">Active</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a href="{% url 'employees:designation_update' pk=desig.pk %}" class="btn btn-sm btn-light border rounded-pill px-3 me-1">Edit</a>
+                        {% if user.role == 'ADMIN' or user.is_superuser %}
+                        <a href="{% url 'employees:designation_delete' pk=desig.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-2"><i class="fa-regular fa-trash-can"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="text-center py-4 text-muted">No designations registered.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

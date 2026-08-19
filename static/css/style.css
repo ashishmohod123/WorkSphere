@@ -1,0 +1,267 @@
+﻿/* WorkSphere Enterprise Theme */
+:root {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59, 130, 246, 0.1);
+    --secondary-color: #64748b;
+    --bg-dark: #0f172a;
+    --sidebar-bg: #1e293b;
+    --sidebar-hover: #334155;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #06b6d4;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    background-color: #f8fafc;
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout */
+#app-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    color: #f8fafc;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+#sidebar .sidebar-brand {
+    padding: 1.5rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#sidebar .sidebar-brand i {
+    color: var(--primary-color);
+}
+
+#sidebar .sidebar-menu {
+    padding: 1rem 0.75rem;
+    list-style: none;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-header {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    padding: 0.75rem 1rem 0.25rem;
+    font-weight: 700;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.925rem;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+    color: #ffffff;
+    background-color: var(--sidebar-hover);
+}
+
+.sidebar-link.active {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+/* Main Content Area */
+#main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* Top Navbar */
+.top-navbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.85rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+/* Cards */
+.card-stat {
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #ffffff;
+}
+
+.card-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.card-custom {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Custom Badges */
+.badge-active { background-color: #dcfce7; color: #15803d; }
+.badge-inactive { background-color: #f1f5f9; color: #475569; }
+.badge-leave { background-color: #fef3c7; color: #b45309; }
+.badge-probation { background-color: #e0e7ff; color: #4338ca; }
+.badge-terminated { background-color: #fee2e2; color: #b91c1c; }
+
+.badge-present { background-color: #dcfce7; color: #15803d; }
+.badge-absent { background-color: #fee2e2; color: #b91c1c; }
+.badge-halfday { background-color: #ffedd5; color: #c2410c; }
+.badge-holiday { background-color: #e0e7ff; color: #3730a3; }
+
+.badge-pending { background-color: #fef3c7; color: #b45309; }
+.badge-approved { background-color: #dcfce7; color: #15803d; }
+.badge-rejected { background-color: #fee2e2; color: #b91c1c; }
+.badge-cancelled { background-color: #f1f5f9; color: #475569; }
+
+.badge-paid { background-color: #dcfce7; color: #15803d; }
+.badge-unpaid { background-color: #fee2e2; color: #b91c1c; }
+.badge-processing { background-color: #e0f2fe; color: #0369a1; }
+
+.badge-custom {
+    padding: 0.4em 0.75em;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border-radius: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-custom {
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    padding: 0.55rem 1.25rem;
+}
+
+/* Tables */
+.table-custom th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table-custom td {
+    vertical-align: middle;
+    font-size: 0.925rem;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0.75rem;
+}
+
+/* User Avatar Thumbnail */
+.avatar-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-lg {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    box-shadow: var(--shadow-md);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 992px) {
+    #sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+    }
+    #sidebar.show {
+        left: 0;
+    }
+    .top-navbar {
+        padding: 0.75rem 1rem;
+    }
+}
