@@ -209,7 +209,7 @@ def portfolio_view(request):
             'category': 'Enterprise Full-Stack / SaaS',
             'status': 'Live on Vercel',
             'status_class': 'badge-present',
-            'description': 'A robust, multi-tenant capable HR Management System with 3-tier Role-Based Access Control (Admin, HR, Employee), daily biometric attendance tracking, working hours engine, multi-tier leave approval workflow, and an Indian statutory payroll engine (INR) calculating EPF, TDS, and printable payslip invoices.',
+            'description': 'A robust, production-grade HR Management System with 3-tier Role-Based Access Control (Admin, HR, Employee), daily biometric attendance tracking, working hours engine, multi-tier leave approval workflow, and an Indian statutory payroll engine (INR) calculating EPF, TDS, and printable payslip invoices.',
             'highlights': [
                 'Statutory Indian Payroll (Basic, 40% HRA, Medical, 10% TDS, 12% EPF, PT)',
                 '1-Click Punch In / Punch Out with auto-calculated daily hours',
@@ -240,44 +240,6 @@ def portfolio_view(request):
             'github_url': 'https://github.com/ashishmohod123/MediCure-HMS-Pro',
             'live_url': 'https://github.com/ashishmohod123/MediCure-HMS-Pro',
             'featured': True,
-        },
-        {
-            'title': 'CloudMart E-Commerce',
-            'subtitle': 'Full-Stack Online Retail & Payment Processing Engine',
-            'icon': 'fa-solid fa-cart-shopping',
-            'category': 'FinTech & E-Commerce',
-            'status': 'Open Source',
-            'status_class': 'badge-probation',
-            'description': 'Modern online store architecture with dynamic product categorization, facet search & filtering, real-time shopping cart session management, order tracking, and multi-gateway payments (Razorpay & Stripe) with automated transactional emails.',
-            'highlights': [
-                'Integrated Razorpay & Stripe Payment Gateways with Webhooks',
-                'Dynamic Catalog Search with pricing & rating filters',
-                'Order Lifecycle Management & Automated Invoice Generation',
-                'User Ratings, Verified Reviews, and Wishlist Engine'
-            ],
-            'technologies': ['Python', 'Django', 'Django REST Framework', 'Stripe / Razorpay API', 'PostgreSQL', 'Redis'],
-            'github_url': 'https://github.com/ashishmohod123',
-            'live_url': 'https://github.com/ashishmohod123',
-            'featured': False,
-        },
-        {
-            'title': 'TaskFlow Agile Kanban',
-            'subtitle': 'Real-Time Sprint & Team Collaboration Platform',
-            'icon': 'fa-solid fa-list-check',
-            'category': 'Productivity & Collaboration',
-            'status': 'Open Source',
-            'status_class': 'badge-leave',
-            'description': 'Agile project tracking tool for software engineering teams featuring drag-and-drop Kanban task boards, milestone roadmaps, sprint burndown velocity charts, team permissions, and real-time activity feeds.',
-            'highlights': [
-                'Drag-and-Drop Kanban Task Board with status transitions',
-                'Sprint Planning & Velocity Burndown Metrics',
-                'Role-Based Project Workspace Permissions',
-                'Task comments, attachments, and activity timelines'
-            ],
-            'technologies': ['Python', 'Django', 'JavaScript ES6+', 'Chart.js', 'TailwindCSS', 'WebSockets'],
-            'github_url': 'https://github.com/ashishmohod123',
-            'live_url': 'https://github.com/ashishmohod123',
-            'featured': False,
         }
     ]
     return render(request, 'dashboard/portfolio.html', {
@@ -285,4 +247,5 @@ def portfolio_view(request):
         'developer_name': 'Ashish Mohod',
         'title': 'Ashish Mohod - Full Stack Python & Django Developer Portfolio',
     })
+
 
