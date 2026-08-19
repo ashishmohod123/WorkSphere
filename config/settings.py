@@ -16,7 +16,14 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-worksphere-enterprise
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost,.vercel.app,*', cast=Csv())
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.vercel.app',
+    'https://*.now.sh',
+    'http://127.0.0.1',
+    'http://localhost',
+]
 
 
 # Application definition
@@ -81,14 +88,32 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database Configuration
-# Default: SQLite3 for rapid development & zero friction
-# Production Ready: Can easily swap to PostgreSQL via environment variables
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+import os
+import shutil
+
+DB_FILE = BASE_DIR / 'db.sqlite3'
+
+if os.environ.get('VERCEL'):
+    TMP_DB = Path('/tmp/db.sqlite3')
+    if not TMP_DB.exists() and DB_FILE.exists():
+        try:
+            shutil.copyfile(DB_FILE, TMP_DB)
+        except Exception:
+            pass
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': TMP_DB,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': DB_FILE,
+        }
+    }
+
 
 
 # Password validation
