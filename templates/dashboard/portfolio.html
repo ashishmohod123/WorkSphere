@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -143,6 +143,9 @@
                 <span>{{ developer_name }}</span>
             </a>
             <div class="d-flex align-items-center gap-2">
+                <a href="{% url 'dashboard:resume' %}" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="fa-solid fa-file-pdf me-1 text-danger"></i> View / Print CV
+                </a>
                 <a href="https://github.com/ashishmohod123" target="_blank" class="btn btn-sm btn-github">
                     <i class="fa-brands fa-github"></i> GitHub Profile
                 </a>
@@ -173,8 +176,18 @@
                 <span class="skill-badge"><i class="fa-brands fa-js text-warning"></i> JavaScript (ES6+)</span>
                 <span class="skill-badge"><i class="fa-solid fa-cloud text-info"></i> Vercel / Docker</span>
             </div>
+
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'dashboard:resume' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold">
+                    <i class="fa-solid fa-file-pdf text-danger me-2"></i> View & Print CV (PDF)
+                </a>
+                <a href="https://github.com/ashishmohod123" target="_blank" class="btn btn-github px-4 py-2">
+                    <i class="fa-brands fa-github me-1"></i> Visit GitHub Profile
+                </a>
+            </div>
         </div>
     </header>
+
 
     <!-- Project Showcase Section -->
     <main class="container max-w-6xl py-5">

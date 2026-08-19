@@ -249,3 +249,14 @@ def portfolio_view(request):
     })
 
 
+def resume_view(request):
+    """
+    Public View for Ashish Mohod's Professional Full Stack Resume (PDF & Print Ready).
+    """
+    return render(request, 'dashboard/resume.html', {
+        'developer_name': 'Ashish Mohod',
+        'title': 'Ashish Mohod - Senior Full Stack Python Developer Resume',
+    })
+
+
+
